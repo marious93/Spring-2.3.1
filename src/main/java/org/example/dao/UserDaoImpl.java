@@ -14,12 +14,13 @@ import java.util.List;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    private final EntityManagerFactory emf;
-
     @Autowired
-    public UserDaoImpl(EntityManagerFactory emf){
-        this.emf = emf;
-    }
+    private EntityManagerFactory emf;
+
+//    @Autowired
+//    public UserDaoImpl(EntityManagerFactory emf){
+//        this.emf = emf;
+//    }
 
     @Override
     public void addUser(User user) {
