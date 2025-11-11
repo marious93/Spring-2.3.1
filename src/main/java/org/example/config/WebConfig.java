@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -17,6 +19,7 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan(value = "org.example")
@@ -77,6 +80,35 @@ public class WebConfig implements WebMvcConfigurer {
         resolver.setCharacterEncoding("UTF-8");
         resolver.setContentType("text/html; charset=UTF-8");
         registry.viewResolver(resolver);
+    }
+
+    @Bean
+    public DataSource dataSource() {
+         DriverManagerDataSource dataSource = new DriverManagerDataSource();
+         dataSource.setDriverClassName(DRIVER);
+         dataSource.setUrl(URL);
+         dataSource.setUsername(USER);
+         dataSource.setPassword(PASSWORD);
+        return dataSource;
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource);
+        em.setPackagesToScan("org.example.model");
+        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        em.setJpaProperties(getHibernateProperties());
+        System.out.println("EntityManager");
+        return em;
+    }
+
+    private Properties getHibernateProperties() {
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", hibernateDialect);
+        properties.put("hibernate.show_sql", showSQL);
+        properties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
+        return properties;
     }
 
 
