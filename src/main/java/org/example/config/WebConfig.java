@@ -79,16 +79,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.viewResolver(resolver);
     }
 
-    @Bean
-    public DataSource dataSource() {
-         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-         dataSource.setDriverClassName(DRIVER);
-         dataSource.setUrl(URL);
-         dataSource.setUsername(USER);
-         dataSource.setPassword(PASSWORD);
-        return dataSource;
-    }
-
 
 
 }
