@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@RequestParam int id, Model model) {
         model.addAttribute("user", userDao.show(id));
         return "users/show";
     }
@@ -48,14 +48,14 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id) {
+    @GetMapping("/edit/{id}")
+    public String edit(Model model, @RequestParam int id) {
         model.addAttribute("user", userDao.show(id));
         return "users/edit";
     }
 
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @PathVariable("id") int id) {
+    @PostMapping("/{id}")
+    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @RequestParam int id) {
         if (bindingResult.hasErrors()) {
             return "users/edit";
         }
@@ -63,8 +63,8 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
+    @PostMapping("/delete/{id}")
+    public String delete(@RequestParam int id) {
         userDao.delete(id);
         return "redirect:/users";
     }
