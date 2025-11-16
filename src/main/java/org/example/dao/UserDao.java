@@ -22,7 +22,7 @@ public class UserDao {
     }
 
 
-    public List<User> index() {
+    public List<User> getUserList() {
         List<User> users = null;
         EntityManager em = factory.createEntityManager();
         try {
@@ -37,7 +37,7 @@ public class UserDao {
         return users;
     }
 
-    public User show(int id) {
+    public User findById(int id) {
         User user = null;
         EntityManager em = factory.createEntityManager();
         try {
@@ -53,7 +53,7 @@ public class UserDao {
         return user;
     }
 
-    public void save(User user) {
+    public void saveUser(User user) {
         EntityManager em = factory.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -67,12 +67,13 @@ public class UserDao {
         }
     }
 
-    public void update(int id, User updatedUser) {
+    public void updateUser(int id, User updatedUser) {
         EntityManager em = factory.createEntityManager();
         try {
             em.getTransaction().begin();
-            Query query = em.createQuery("update User set name =:firstName, mail=:email, age=:age  where id=:id").
-                    setParameter("firstName", updatedUser.getName()).setParameter("email", updatedUser.getMail()).
+            Query query = em.createQuery("update User set name =:name, mail=:email, age=:age  where id=:id").
+                    setParameter("name", updatedUser.getName()).
+                    setParameter("email", updatedUser.getMail()).
                     setParameter("age", updatedUser.getAge()).
                     setParameter("id", id);
             query.executeUpdate();
@@ -85,8 +86,7 @@ public class UserDao {
         }
     }
 
-    public void delete(int id) {
-
+    public void deleteUser(int id) {
         EntityManager em = factory.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -100,4 +100,5 @@ public class UserDao {
             em.close();
         }
     }
+
 }

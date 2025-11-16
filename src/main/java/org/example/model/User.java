@@ -15,7 +15,7 @@ public class User {
     private int id;
 
     @NotEmpty(message = "Name shouldn't be empty")
-    @Size(min = 2, max = 30, message = "incorrect filled field")
+    @Size(min = 2, max = 30, message = "Name too short")
     @Column(nullable = false, name = "name")
     private String name;
 
@@ -24,7 +24,7 @@ public class User {
     @Column(name = "eMail")
     private String mail;
 
-    @Min(value=1,message = "Age should be greater than 0")
+    @Min(value = 1, message = "Age should be greater than 0")
     private int age;
 
     public User() {
@@ -67,5 +67,15 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", mail='" + mail + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

@@ -22,50 +22,51 @@ public class UserController {
     }
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("users", userDao.index());
+    public String showAllUsers(Model model) {
+        model.addAttribute("users", userDao.getUserList());
         return "users/index";
     }
 
     @GetMapping("/{id}")
-    public String show(@RequestParam int id, Model model) {
-        model.addAttribute("user", userDao.show(id));
+    public String showUserById(@RequestParam int id, Model model) {
+        model.addAttribute("user", userDao.findById(id));
         return "users/show";
     }
 
     @GetMapping("/new")
-    public String newPerson(Model model) {
+    public String newUser(Model model) {
         model.addAttribute("user", new User());
         return "users/new";
     }
 
     @PostMapping
-    public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "users/new";
         }
-        userDao.save(user);
+        userDao.saveUser(user);
         return "redirect:/users";
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(Model model, @RequestParam int id) {
-        model.addAttribute("user", userDao.show(id));
+    public String editUser(Model model, @RequestParam int id) {
+        model.addAttribute("user", userDao.findById(id));
         return "users/edit";
     }
 
     @PostMapping("/{id}")
-    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @RequestParam int id) {
+    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
+                             @RequestParam int id) {
         if (bindingResult.hasErrors()) {
             return "users/edit";
         }
-        userDao.update(id, user);
+        userDao.updateUser(id, user);
         return "redirect:/users";
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@RequestParam int id) {
-        userDao.delete(id);
+    public String deleteUser(@RequestParam int id) {
+        userDao.deleteUser(id);
         return "redirect:/users";
     }
 
