@@ -83,11 +83,11 @@ public class JavaConfig implements WebMvcConfigurer {
 
     @Bean
     public DataSource dataSource() {
-         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-         dataSource.setDriverClassName(DRIVER);
-         dataSource.setUrl(URL);
-         dataSource.setUsername(USER);
-         dataSource.setPassword(PASSWORD);
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(DRIVER);
+        dataSource.setUrl(URL);
+        dataSource.setUsername(USER);
+        dataSource.setPassword(PASSWORD);
         return dataSource;
     }
 
