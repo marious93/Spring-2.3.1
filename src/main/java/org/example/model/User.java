@@ -1,6 +1,8 @@
 package org.example.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -13,47 +15,34 @@ public class User {
     private int id;
 
     @NotEmpty(message = "Name shouldn't be empty")
-    @Column(nullable = false, name = "first_Name")
-    private String firstName;
+    @Size(min = 2, max = 30, message = "incorrect filled field")
+    @Column(nullable = false, name = "name")
+    private String name;
 
+    @NotEmpty(message = "Mail shouldn't be empty")
+    @Email(message = "Mail should be valid")
+    @Column(name = "eMail")
+    private String mail;
 
-    @NotEmpty(message = "Name shouldn't be empty")
-    @Column(nullable = false, name = "last_Name")
-    private String lastName;
-
-    //@Size(min=0,message = "Age shoud be greater than 0")
+    @Min(value=1,message = "Age should be greater than 0")
     private int age;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, int age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-    }
-
-    public User(int id, String firstName, String lastName, int age) {
+    public User(int id, String name, String mail, int age) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
+        this.mail = mail;
         this.age = age;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String firstName) {
+        this.name = firstName;
     }
 
     public int getAge() {
@@ -64,13 +53,12 @@ public class User {
         this.age = age;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                '}';
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public int getId() {

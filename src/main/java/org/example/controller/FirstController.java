@@ -11,7 +11,6 @@ public class FirstController {
 
     @GetMapping("/")
     public String home(@RequestParam(value = "firstName" ,required = false) String firstName,
-                     //  @RequestParam(value = "lastName",required = false) String lastName,
                        @RequestParam(value = "age" ,required = false) Integer age,
                        Model model) {
 

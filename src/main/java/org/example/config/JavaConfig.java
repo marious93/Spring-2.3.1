@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -25,7 +24,7 @@ import java.util.Properties;
 @ComponentScan(value = "org.example")
 @EnableWebMvc
 @PropertySource("classpath:db.properties")
-public class WebConfig implements WebMvcConfigurer {
+public class JavaConfig implements WebMvcConfigurer {
 
     @Value("${db.driver}")
     private String DRIVER;
@@ -51,7 +50,7 @@ public class WebConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
 
     @Autowired
-    public WebConfig(ApplicationContext applicationContext) {
+    public JavaConfig(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
@@ -94,13 +93,12 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource);
-        em.setPackagesToScan("org.example.model");
-        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        em.setJpaProperties(getHibernateProperties());
-        System.out.println("EntityManager");
-        return em;
+        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactory.setDataSource(dataSource);
+        entityManagerFactory.setPackagesToScan("org.example.model");
+        entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        entityManagerFactory.setJpaProperties(getHibernateProperties());
+        return entityManagerFactory;
     }
 
     private Properties getHibernateProperties() {
@@ -110,7 +108,6 @@ public class WebConfig implements WebMvcConfigurer {
         properties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
         return properties;
     }
-
 
 
 }

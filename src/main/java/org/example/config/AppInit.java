@@ -16,7 +16,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{WebConfig.class};
+        return new Class[]{JavaConfig.class};
     }
 
     @Override
@@ -31,7 +31,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     }
 
     private void registerHiddenFieldFilter(ServletContext servletContext) {
-        servletContext.addFilter("hiddenHttpMethodFIlter", new HiddenHttpMethodFilter()).
+        servletContext.addFilter("hiddenHttpMethodFilter", new HiddenHttpMethodFilter()).
                 addMappingForUrlPatterns(null, true, "/*");
     }
 
