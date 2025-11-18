@@ -12,12 +12,12 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Component
-public class UserDao {
+public class UserDaoImpl implements UserDai {
 
     private EntityManagerFactory factory;
 
     @Autowired
-    public UserDao(EntityManagerFactory factory) {
+    public UserDaoImpl(EntityManagerFactory factory) {
         this.factory = factory;
     }
 
