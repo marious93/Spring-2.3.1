@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Component
-public class UserDaoImpl implements UserDai {
+public class UserDaoImpl implements UserDao {
 
     private EntityManagerFactory factory;
 
@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDai {
         this.factory = factory;
     }
 
-
+    @Override
     public List<User> getUserList() {
         List<User> users = null;
         EntityManager em = factory.createEntityManager();
@@ -37,6 +37,7 @@ public class UserDaoImpl implements UserDai {
         return users;
     }
 
+    @Override
     public User findById(int id) {
         User user = null;
         EntityManager em = factory.createEntityManager();
@@ -53,6 +54,7 @@ public class UserDaoImpl implements UserDai {
         return user;
     }
 
+    @Override
     public void saveUser(User user) {
         EntityManager em = factory.createEntityManager();
         try {
@@ -67,6 +69,7 @@ public class UserDaoImpl implements UserDai {
         }
     }
 
+    @Override
     public void updateUser(int id, User updatedUser) {
         EntityManager em = factory.createEntityManager();
         try {
@@ -86,6 +89,7 @@ public class UserDaoImpl implements UserDai {
         }
     }
 
+    @Override
     public void deleteUser(int id) {
         EntityManager em = factory.createEntityManager();
         try {

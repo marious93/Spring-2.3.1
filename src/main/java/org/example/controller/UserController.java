@@ -1,7 +1,7 @@
 package org.example.controller;
 
-import org.example.dao.UserDao;
 import org.example.model.User;
+import org.example.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,22 +14,22 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserDao userDao;
+    private UserServiceImpl userService;
 
     @Autowired
-    public UserController(UserDao userDao) {
-        this.userDao = userDao;
+    public UserController(UserServiceImpl userDao) {
+        this.userService = userDao;
     }
 
     @GetMapping()
     public String showAllUsers(Model model) {
-        model.addAttribute("users", userDao.getUserList());
+        model.addAttribute("users", userService.getUserList());
         return "users/index";
     }
 
     @GetMapping("/{id}")
     public String showUserById(@RequestParam int id, Model model) {
-        model.addAttribute("user", userDao.findById(id));
+        model.addAttribute("user", userService.findById(id));
         return "users/show";
     }
 
@@ -44,13 +44,13 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "users/new";
         }
-        userDao.saveUser(user);
+        userService.saveUser(user);
         return "redirect:/users";
     }
 
     @GetMapping("/edit/{id}")
     public String editUser(Model model, @RequestParam int id) {
-        model.addAttribute("user", userDao.findById(id));
+        model.addAttribute("user", userService.findById(id));
         return "users/edit";
     }
 
@@ -60,13 +60,13 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "users/edit";
         }
-        userDao.updateUser(id, user);
+        userService.updateUser(id, user);
         return "redirect:/users";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteUser(@RequestParam int id) {
-        userDao.deleteUser(id);
+        userService.deleteUser(id);
         return "redirect:/users";
     }
 
