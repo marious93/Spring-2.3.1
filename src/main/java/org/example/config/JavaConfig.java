@@ -23,29 +23,8 @@ import java.util.Properties;
 @Configuration
 @ComponentScan(value = "org.example")
 @EnableWebMvc
-@PropertySource("classpath:db.properties")
 public class JavaConfig implements WebMvcConfigurer {
 
-    @Value("${db.driver}")
-    private String DRIVER;
-
-    @Value("${db.url}")
-    private String URL;
-
-    @Value("${db.username}")
-    private String USER;
-
-    @Value("${db.password}")
-    private String PASSWORD;
-
-    @Value("${hb.dialect}")
-    private String hibernateDialect;
-
-    @Value("${hb.hbm2ddl_auto}")
-    private String hibernateHbm2ddlAuto;
-
-    @Value("${hb.show_sql}")
-    private String showSQL;
 
     private final ApplicationContext applicationContext;
 
@@ -79,34 +58,6 @@ public class JavaConfig implements WebMvcConfigurer {
         resolver.setCharacterEncoding("UTF-8");
         resolver.setContentType("text/html; charset=UTF-8");
         registry.viewResolver(resolver);
-    }
-
-    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(DRIVER);
-        dataSource.setUrl(URL);
-        dataSource.setUsername(USER);
-        dataSource.setPassword(PASSWORD);
-        return dataSource;
-    }
-
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactory.setDataSource(dataSource);
-        entityManagerFactory.setPackagesToScan("org.example.model");
-        entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        entityManagerFactory.setJpaProperties(getHibernateProperties());
-        return entityManagerFactory;
-    }
-
-    private Properties getHibernateProperties() {
-        Properties properties = new Properties();
-        properties.put("hibernate.dialect", hibernateDialect);
-        properties.put("hibernate.show_sql", showSQL);
-        properties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
-        return properties;
     }
 
 
