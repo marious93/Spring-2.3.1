@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.model.User;
+import org.example.service.UserService;
 import org.example.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,10 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
-    public UserController(UserServiceImpl userDao) {
+    public UserController(UserService userDao) {
         this.userService = userDao;
     }
 
