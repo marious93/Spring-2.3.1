@@ -2,8 +2,6 @@ package org.example.controller;
 
 import org.example.model.User;
 import org.example.service.UserService;
-import org.example.service.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,9 +13,9 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
+    
     public UserController(UserService userDao) {
         this.userService = userDao;
     }
